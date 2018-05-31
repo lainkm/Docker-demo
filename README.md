@@ -1,3 +1,85 @@
+基础：
+
+http://www.ruanyifeng.com/blog/2018/02/docker-tutorial.html
+
+http://www.ruanyifeng.com/blog/2018/02/docker-wordpress-tutorial.html
+
+
+
+为什么用？
+
+方便部署
+
+
+
+前提：
+
+uname -m查看ubuntu多少位的i686是32位
+
+ok，docker不支持ubuntu32，因为很多镜像都是64位，手动创建不太必要- - 
+
+
+
+自动化工具docker-compose：
+
+一般：Python容器+Django容器+mysql容器+Nginx容器+redis容器
+
+简单：Python+Django+mysql容器使用：
+
+1.结构
+
+db/ 
+
+docker-compose.yml 
+
+Dockerfile 
+
+izone/ 
+
+requirements.txt
+
+
+
+2.Dockerfile文件
+
+3.docker-compose.yml文件
+
+4.修改izone项目数据库等配置
+
+5.Dockerfile如果全是官方镜像可以直接docker-compose up
+
+如果还有自己打包的镜像，需要docker-compose build再up -d(后台)
+
+然后在容器里执行makemigrations、migrate、createsuperuser
+
+
+
+附录
+
+1、查看当前docker容器中已有的image
+
+docker image ls
+
+2、查看所有的容器
+
+docker ps -a
+
+3、批量停止在运行中的容器
+
+docker ps -a | grep 'Up' | awk '{print $1}'| xargs docker container stop
+
+4、批量删除Exited状态的容器
+
+docker ps -a | grep 'Exited' | awk '{print $1}'| xargs docker container rm
+
+5、批量删除name为none的image
+
+docker image ls | grep none | awk '{print $3}' | xargs docker image rm
+
+
+
+
+
 二级评论
 用户认证
 第三方登陆
