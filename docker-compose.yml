@@ -1,0 +1,21 @@
+ 
+  db:
+    image: mysql/mysql-server
+    restart: always
+    command: mysqld --character-set-server=utf8mb4 --collation-server=utf8mb4_unicode_ci --init-connect='SET NAMES utf8mb4;' --innodb-flush-log-at-trx-commit=0
+    expose:
+     - "3306"
+    volumes:
+     - ./db:/var/lib/mysql:rw
+    environment:
+     - MYSQL_ROOT_PASSWORD=666666
+     - MYSQL_DATABASE=blogdb
+  web:
+    build: .
+    command: python3 izone/manage.py runserver 0.0.0.0:8001
+    volumes:
+      - .:/izone
+    ports:
+      - "8001:8001"
+    links:
+      - db
